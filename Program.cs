@@ -16,8 +16,10 @@ Party monstersTwo = new Party(
     "MONSTERS"
 );
 
+Party UncodedOne = new Party(new List<Character> { new UncodedOne() }, "Monsters");
+
 Player heroPlayer = new ComputerPlayer(heroes);
-List<Party> monsterParties = new List<Party> {monstersOne, monstersTwo};
+List<Party> monsterParties = new List<Party> {monstersOne, monstersTwo, UncodedOne};
 
 Game game = new Game(heroPlayer, monsterParties);
 game.Run();
@@ -42,6 +44,12 @@ public class Character
     {
         CurrHP = Math.Max(0, CurrHP - amount);
     }
+}
+
+public class UncodedOne : Character
+{
+    public UncodedOne()
+        : base("THE UNCODED ONE", new UnravelAttack(), 15) { }
 }
 
 
@@ -84,6 +92,19 @@ public abstract class Attack
     public abstract int GetDamage();
 
 }
+
+public class UnravelAttack : Attack
+{
+    private static readonly Random Random = new();
+    public UnravelAttack()
+        : base("UNRAVEL") { }
+
+    public override int GetDamage()
+    {
+        return Random.Next(3);
+    }
+}
+
 
 public class Punch : Attack
 {
