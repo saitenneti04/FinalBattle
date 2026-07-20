@@ -7,17 +7,20 @@ Party heroes = new Party(
 );
 
 
-Party monsters = new Party(
+Party monstersOne = new Party(
     new List<Character> { new Skeleton() },
+    "MONSTERS"
+);
+Party monstersTwo = new Party(
+    new List<Character> { new Skeleton(), new Skeleton() },
     "MONSTERS"
 );
 
 Player heroPlayer = new ComputerPlayer(heroes);
-Player monsterPlayer = new ComputerPlayer(monsters);
+List<Party> monsterParties = new List<Party> {monstersOne, monstersTwo};
 
-Game game = new Game(heroPlayer, monsterPlayer);
+Game game = new Game(heroPlayer, monsterParties);
 game.Run();
-
 
 public class Character
 {
@@ -188,34 +191,52 @@ public class ComputerPlayer : Player
 public class Game
 {
     private readonly Player _heroPlayer;
-    private readonly Player _monsterPlayer;
+    private readonly List<Party> _monsterParties;
 
-    public Game(Player heroPlayer, Player monsterPlayer)
+    public Game(Player heroPlayer, List<Party> monsterParties)
     {
         _heroPlayer = heroPlayer;
-        _monsterPlayer = monsterPlayer;
+        _monsterParties = monsterParties;
     }
 
     public void Run()
     {
+        foreach (Party party in _monsterParties)
+        {
+            Player monsterPlayer = new ComputerPlayer(party);
+            bool heroesWon = RunBattle(monsterPlayer);
+            if (!heroesWon)
+            {
+                Console.WriteLine("Monsters Win the overall battle!");
+                return;
+            }
+
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("The heroes win the battle! Congratulations.");
+
+    }
+
+    private bool RunBattle(Player monsterPlayer)
+    {
         while (true)
         {
-            bool monstersStillAlive = RunPartyTurns(_heroPlayer, _monsterPlayer.Party);
+            bool monstersStillAlive = RunPartyTurns(_heroPlayer, monsterPlayer.Party);
             if (!monstersStillAlive)
-            { 
-                Console.WriteLine("Heroes win, the Uncoded One lost!");
-                break;
+            {
+                Console.WriteLine("Heroes win, this round!");
+                return true;
             }
 
 
-            bool heroesStillAlive = RunPartyTurns(_monsterPlayer, _heroPlayer.Party);
+            bool heroesStillAlive = RunPartyTurns(monsterPlayer, _heroPlayer.Party);
             if (!heroesStillAlive)
             {
-                Console.WriteLine("Uncoded One wins!");
-                break;
+                Console.WriteLine("Monsters win this round!");
+                return false;
             }
         }
-        
     }
 
     private bool RunPartyTurns(Player player, Party enemyParty)
