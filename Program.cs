@@ -18,10 +18,32 @@ Party monstersTwo = new Party(
 
 Party UncodedOne = new Party(new List<Character> { new UncodedOne() }, "Monsters");
 
-Player heroPlayer = new ComputerPlayer(heroes);
+
+int choice;
+do
+{
+    Console.WriteLine("Pick a game mode:");
+    Console.WriteLine("1. Human vs Human, 2: Human vs Computer, 3: Computer vs Computer: ");
+    choice = Convert.ToInt32(Console.ReadLine());
+} while (choice != 1 && choice != 2 && choice != 3);
+
+GameMode gameMode = choice switch
+{
+    1 => GameMode.PlayerVsPlayer,
+    2 => GameMode.PlayerVsComputer,
+    3 => GameMode.ComputerVsComputer
+};
+
 List<Party> monsterParties = new List<Party> {monstersOne, monstersTwo, UncodedOne};
 
-Game game = new Game(heroPlayer, monsterParties);
+
+
+Game game = gameMode switch
+{
+    GameMode.ComputerVsComputer => new Game(new ComputerPlayer(heroes), monsterParties, gameMode),
+    _ => new Game(new HumanPlayer(heroes), monsterParties, gameMode)
+};
+
 game.Run();
 
 public class Character
@@ -193,6 +215,35 @@ public abstract class Player
     public abstract GameAction ChooseAction(Character character, Party enemy);
 }
 
+public class HumanPlayer : Player
+{
+    public HumanPlayer(Party party)
+        : base(party) { }
+
+    public override GameAction ChooseAction(Character character, Party enemyParty)
+    {
+        Character target = enemyParty.Characters[0];
+
+        int choice = GetChoice(character);
+
+        if (choice == 2) { return new DoNothingAction(character); }
+        else { return new AttackAction(character, character.StandardAttack, target, enemyParty); }
+
+    }
+
+    private int GetChoice(Character character)
+    {
+        int choice;
+        do
+        {
+            Console.WriteLine($"1 - Standard Attack ({character.StandardAttack.Name})");
+            Console.WriteLine("2 - Do Nothing");
+            Console.Write("What do you want to do? Pick a number from above: ");
+            choice = Convert.ToInt32(Console.ReadLine());
+        } while (choice != 1 && choice != 2);
+        return choice;
+    }
+}
 
 public class ComputerPlayer : Player
 {
@@ -213,18 +264,20 @@ public class Game
 {
     private readonly Player _heroPlayer;
     private readonly List<Party> _monsterParties;
+    private readonly GameMode _gameMode;
 
-    public Game(Player heroPlayer, List<Party> monsterParties)
+    public Game(Player heroPlayer, List<Party> monsterParties, GameMode gameMode)
     {
-        _heroPlayer = heroPlayer;
         _monsterParties = monsterParties;
+        _gameMode = gameMode;
+        _heroPlayer = heroPlayer;
     }
 
     public void Run()
     {
         foreach (Party party in _monsterParties)
         {
-            Player monsterPlayer = new ComputerPlayer(party);
+            Player monsterPlayer = GetPlayer(party);
             bool heroesWon = RunBattle(monsterPlayer);
             if (!heroesWon)
             {
@@ -239,6 +292,15 @@ public class Game
 
     }
 
+    private Player GetPlayer(Party party)
+    {
+        return _gameMode switch
+        {
+            GameMode.PlayerVsPlayer => new HumanPlayer(party),
+            _ => new ComputerPlayer(party)
+        };
+    }
+
     private bool RunBattle(Player monsterPlayer)
     {
         while (true)
@@ -247,6 +309,7 @@ public class Game
             if (!monstersStillAlive)
             {
                 Console.WriteLine("Heroes win, this round!");
+                Console.WriteLine();
                 return true;
             }
 
@@ -276,3 +339,4 @@ public class Game
     }
 }
 
+public enum GameMode { PlayerVsComputer, ComputerVsComputer, PlayerVsPlayer };
