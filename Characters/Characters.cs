@@ -24,4 +24,9 @@ public class Character
     {
         CurrHP = Math.Max(0, CurrHP - amount);
     }
+
+    public void UseHealthPotion(int amount)
+    {
+        CurrHP = Math.Min(MaxHP, CurrHP + amount);
+    }
 }
