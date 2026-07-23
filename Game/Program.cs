@@ -7,15 +7,18 @@ Party heroes = new Party(
     "HEROES", new List<Item> { new HealthPotion(), new HealthPotion(), new HealthPotion()}
 );
 
+Skeleton skeletonBattleOne = new Skeleton();
+skeletonBattleOne.Gear = new Dagger();
 
 Party monstersOne = new Party(
-    new List<Character> { new Skeleton() },
+    new List<Character> { skeletonBattleOne },
     "MONSTERS", new List<Item> { new HealthPotion() }
 );
 Party monstersTwo = new Party(
     new List<Character> { new Skeleton(), new Skeleton() },
     "MONSTERS", new List<Item> { new HealthPotion() }
 );
+monstersTwo.Gear = new List<Gear>{  new Dagger(), new Dagger() };
 
 Party UncodedOne = new Party(new List<Character> { new UncodedOne() },
     "Monsters", new List<Item> { new HealthPotion() }

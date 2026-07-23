@@ -6,7 +6,7 @@ using System.Text;
 public class Skeleton : Character
 {
     public Skeleton()
-        : base("SKELETON", new BoneCrunch(), 5)
+        : base("SKELETON", new BoneCrunch(), 5, null)
     {
     }
 }

@@ -12,12 +12,15 @@ public class Character
     public int MaxHP { get; }
     public int CurrHP { get; private set; }
 
-    public Character(string name, Attack standardAttack, int maxHP)
+    public Gear Gear { get; set; }
+
+    public Character(string name, Attack standardAttack, int maxHP, Gear gear)
     {
         Name = name;
         StandardAttack = standardAttack;
         MaxHP = maxHP;
         CurrHP = maxHP;
+        Gear = gear;
     }
 
     public void ReceiveDamage(int amount)
