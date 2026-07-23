@@ -27,7 +27,6 @@
 
         Console.WriteLine();
         Console.WriteLine("The heroes win the battle! Congratulations.");
-
     }
 
     private Player GetPlayer(Party party)
@@ -51,7 +50,6 @@
                 return true;
             }
 
-
             bool heroesStillAlive = RunPartyTurns(monsterPlayer, _heroPlayer.Party);
             if (!heroesStillAlive)
             {
@@ -65,9 +63,10 @@
     {
         foreach (Character character in player.Party.Characters)
         {
+            DisplayStatus.DisplayGameStatus(player.Party, character, enemyParty);
             Console.WriteLine($"It is {character.Name}'s turn...");
 
-            GameAction action = player.ChooseAction(character, enemyParty);
+            GameAction action = player.ChooseAction(player.Party,character, enemyParty);
             action.Run();
             if (enemyParty.Characters.Count == 0) { return false; }
             Console.WriteLine();
@@ -76,3 +75,4 @@
         return true;
     }
 }
+

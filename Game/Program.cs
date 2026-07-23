@@ -4,20 +4,22 @@ string name = Console.ReadLine() ?? "Programmer";
 
 Party heroes = new Party(
     new List<Character> { new TrueProgrammer(name) },
-    "HEROES"
+    "HEROES", new List<Item> { new HealthPotion(), new HealthPotion(), new HealthPotion()}
 );
 
 
 Party monstersOne = new Party(
     new List<Character> { new Skeleton() },
-    "MONSTERS"
+    "MONSTERS", new List<Item> { new HealthPotion() }
 );
 Party monstersTwo = new Party(
     new List<Character> { new Skeleton(), new Skeleton() },
-    "MONSTERS"
+    "MONSTERS", new List<Item> { new HealthPotion() }
 );
 
-Party UncodedOne = new Party(new List<Character> { new UncodedOne() }, "Monsters");
+Party UncodedOne = new Party(new List<Character> { new UncodedOne() },
+    "Monsters", new List<Item> { new HealthPotion() }
+   );
 
 
 int choice;

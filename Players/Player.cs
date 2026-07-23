@@ -7,5 +7,5 @@
         Party = party;
     }
 
-    public abstract GameAction ChooseAction(Character character, Party enemy);
+    public abstract GameAction ChooseAction(Party characterParty, Character character, Party enemy);
 }
