@@ -5,50 +5,48 @@
 
     public override GameAction ChooseAction(Party characterParty, Character character, Party enemyParty)
     {
-        Character target = enemyParty.Characters[0];
-
-        int choice = GetChoice(character, characterParty);
-
-        if (choice == 2) { return new DoNothingAction(character); }
-        else if (choice == 1) { return new AttackAction(character, character.StandardAttack, target, enemyParty); }
-        else
+        List<MenuItem> items = GetMenuItems(character, characterParty, enemyParty);
+        for (int i = 0; i < items.Count; i++)
         {
-            Item item = GetItemChoice(characterParty);
-            return new ItemAction(item, character, characterParty);
+            Console.WriteLine($"{i+1} {items[i].description}.");
         }
-    }
 
-    private Item GetItemChoice(Party characterParty)
-    {
-        for (int i = 0; i < characterParty.Items.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {characterParty.Items[i].Name}");
-        }
-        int itemChoice;
-
-        do
-        {
-            Console.Write("What do you want to do? Pick a number from above: ");
-            itemChoice = Convert.ToInt32(Console.ReadLine());
-        } while (itemChoice < 1 || itemChoice > characterParty.Items.Count);
-        return characterParty.Items[itemChoice - 1];
-
-    }
-
-    private int GetChoice(Character character, Party characterParty)
-    {
-        bool itemsAvailable;
         int choice;
         do
         {
-            Console.WriteLine($"1 - Standard Attack ({character.StandardAttack.Name})");
-            Console.WriteLine("2 - Do Nothing");
-            itemsAvailable = characterParty.CheckItemsAvailable();
-            if (itemsAvailable) { Console.WriteLine("3 - Select an item from party inventory"); }
             Console.Write("What do you want to do? Pick a number from above: ");
             choice = Convert.ToInt32(Console.ReadLine());
-        } while ((choice != 1 && choice != 2 && !itemsAvailable) || (choice != 1 && choice != 2 && choice != 3 && itemsAvailable) );
-        return choice;
+        } while (choice < 1 || choice > items.Count);
+
+        return items[choice - 1].action;
     }
 
+    private List<MenuItem> GetMenuItems(Character character, Party characterParty, Party enemyParty)
+    {
+        List<MenuItem> items = new List<MenuItem>();
+        items.Add(new MenuItem("Standard Attack ({characater.StandardAttackName}", new AttackAction(character, character.StandardAttack, enemyParty.Characters[0], enemyParty)));
+        items.Add(new MenuItem("Do Nothing", new DoNothingAction(character)));
+
+        if (characterParty.Items != null)
+        {
+            for (int i = 0; i < characterParty.Items.Count; i++)
+            {
+                items.Add(new MenuItem($"Select item {i + 1} from party inventory = {characterParty.Items[i].Name}", new ItemAction(characterParty.Items[i], character, characterParty)));
+            }
+        }
+        if (characterParty.Gear != null)
+        {
+            for (int i = 0; i < characterParty.Gear.Count; i++)
+            {
+                items.Add(new MenuItem($"Select gear {i + 1} from party inventory to equip character = {characterParty.Gear[i].Name}", new EquipAction(character, characterParty.Gear[i], characterParty)));
+            }
+        }
+        if (character.Gear != null) { items.Add(new MenuItem($"Gear attack - {character.Gear.Attack.Name}", new AttackAction(character, character.Gear.Attack, enemyParty.Characters[0], enemyParty))); }
+
+        return items;
+    }
+
+
 }
+
+record MenuItem(string description, GameAction action);
