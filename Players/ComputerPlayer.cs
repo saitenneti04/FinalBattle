@@ -22,8 +22,8 @@
             return new EquipAction(character, characterParty.Gear[0], characterParty);
         }
 
-        if (character.Gear != null) { return new AttackAction(character, character.Gear.Attack, target, enemyParty); }
+        if (character.Gear != null) { return new AttackAction(character, character.Gear.Attack,characterParty, target, enemyParty); }
 
-        return new AttackAction(character, character.StandardAttack, target, enemyParty);
+        return new AttackAction(character, character.StandardAttack,characterParty, target, enemyParty);
     }
 }

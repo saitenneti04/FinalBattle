@@ -47,6 +47,8 @@
             {
                 Console.WriteLine("Heroes win, this round!");
                 Console.WriteLine();
+                TransferItems(_heroPlayer.Party, monsterPlayer.Party);
+                TransferGear(_heroPlayer.Party, monsterPlayer.Party);
                 return true;
             }
 
@@ -74,5 +76,29 @@
         }
         return true;
     }
+
+    private void TransferItems(Party winner, Party Loser)
+    {
+        if (Loser.Items == null || Loser.Items.Count == 0) { return; }
+        Console.WriteLine($"The following items are being transferred to the winning party: ");
+        for (int i = 0; i < Loser.Items.Count; i++) {
+            winner.Items.Add(Loser.Items[i]);
+            Console.WriteLine($"Item {i + 1}: {Loser.Items[i].Name}");
+        }
+        Loser.Items.Clear();
+    }
+
+    private void TransferGear(Party winner, Party Loser)
+    {
+        if (Loser.Gear == null || Loser.Gear.Count == 0) { return; }
+        Console.WriteLine($"The following gear is being transferred to the winning party: ");
+        for (int i = 0; i < Loser.Gear.Count; i++)
+        {
+            winner.Gear.Add(Loser.Gear[i]);
+            Console.WriteLine($"Gear numer {i + 1}: {Loser.Gear[i].Name}");
+        }
+        Loser.Gear.Clear();
+    }
+
 }
 

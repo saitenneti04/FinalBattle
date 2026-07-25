@@ -14,13 +14,17 @@ public class Character
 
     public Gear Gear { get; set; }
 
-    public Character(string name, Attack standardAttack, int maxHP, Gear gear)
+    public AttackModifier AttackModifier { get; set; }
+
+
+    public Character(string name, Attack standardAttack, int maxHP, Gear gear, AttackModifier modifier)
     {
         Name = name;
         StandardAttack = standardAttack;
         MaxHP = maxHP;
         CurrHP = maxHP;
         Gear = gear;
+        AttackModifier = modifier;
     }
 
     public void ReceiveDamage(int amount)

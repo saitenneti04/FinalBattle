@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-public class SlashAttack : Attack
+public class Bite : Attack
 {
-    public SlashAttack()
-        : base("SLASH ATTACK") { }
+    public Bite()
+        : base("BITE") { }
 
     public override int GetDamage()
     {
-        return 2;
+        return 1;
     }
+
     public override float GetDamageProbability()
     {
         return 1;

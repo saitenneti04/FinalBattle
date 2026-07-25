@@ -8,4 +8,9 @@
     {
         return Random.Next(2);
     }
+
+    public override float GetDamageProbability()
+    {
+        return 1;
+    }
 }

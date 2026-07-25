@@ -24,7 +24,7 @@
     private List<MenuItem> GetMenuItems(Character character, Party characterParty, Party enemyParty)
     {
         List<MenuItem> items = new List<MenuItem>();
-        items.Add(new MenuItem("Standard Attack ({characater.StandardAttackName}", new AttackAction(character, character.StandardAttack, enemyParty.Characters[0], enemyParty)));
+        items.Add(new MenuItem("Standard Attack ({characater.StandardAttackName}", new AttackAction(character, character.StandardAttack, characterParty, enemyParty.Characters[0], enemyParty)));
         items.Add(new MenuItem("Do Nothing", new DoNothingAction(character)));
 
         if (characterParty.Items != null)
@@ -41,11 +41,10 @@
                 items.Add(new MenuItem($"Select gear {i + 1} from party inventory to equip character = {characterParty.Gear[i].Name}", new EquipAction(character, characterParty.Gear[i], characterParty)));
             }
         }
-        if (character.Gear != null) { items.Add(new MenuItem($"Gear attack - {character.Gear.Attack.Name}", new AttackAction(character, character.Gear.Attack, enemyParty.Characters[0], enemyParty))); }
+        if (character.Gear != null) { items.Add(new MenuItem($"Gear attack - {character.Gear.Attack.Name}", new AttackAction(character, character.Gear.Attack, characterParty, enemyParty.Characters[0], enemyParty))); }
 
         return items;
     }
-
 
 }
 

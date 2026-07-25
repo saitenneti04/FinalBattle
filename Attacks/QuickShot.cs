@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-public class SlashAttack : Attack
+public class QuickShot : Attack
 {
-    public SlashAttack()
-        : base("SLASH ATTACK") { }
+    public QuickShot()
+        : base("QUICK SHOT") { }
 
     public override int GetDamage()
     {
-        return 2;
+        return 3;
     }
     public override float GetDamageProbability()
     {
-        return 1;
+        return 0.5f;
     }
 }
