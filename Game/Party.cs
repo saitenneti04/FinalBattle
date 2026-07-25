@@ -4,7 +4,7 @@ public class Party
     public string Name { get; }
     public List<Character> Characters { get; } 
     public List<Item> Items { get; }
-    public List<Gear> Gear { get; set; }
+    public List<Gear> Gear { get; set; } = new List<Gear> { };
 
     public Party(List<Character> characters, string name, List<Item> items)
     {

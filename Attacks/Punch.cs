@@ -7,4 +7,9 @@
     {
         return 1;
     }
+
+    public override float GetDamageProbability()
+    {
+        return 1;
+    }
 }

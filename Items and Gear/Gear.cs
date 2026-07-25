@@ -23,3 +23,9 @@ public class Dagger : Gear
     public Dagger()
         : base("Dagger", new StabAttack()) { }
 }
+
+public class VinsBow : Gear
+{
+    public VinsBow()
+        : base("Vins Bow", new QuickShot()) { }
+}

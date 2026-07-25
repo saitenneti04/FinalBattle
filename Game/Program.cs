@@ -3,12 +3,14 @@ Console.Write("What's your name: ");
 string name = Console.ReadLine() ?? "Programmer";
 
 Party heroes = new Party(
-    new List<Character> { new TrueProgrammer(name) },
+    new List<Character> { new TrueProgrammer(name), new VinFletcher() },
     "HEROES", new List<Item> { new HealthPotion(), new HealthPotion(), new HealthPotion()}
 );
 
 Skeleton skeletonBattleOne = new Skeleton();
 skeletonBattleOne.Gear = new Dagger();
+
+Party monstersZero = new Party(new List<Character> { new StoneAmarok(), new StoneAmarok() }, "MONSTERS", new List<Item> { });
 
 Party monstersOne = new Party(
     new List<Character> { skeletonBattleOne },
@@ -40,7 +42,7 @@ GameMode gameMode = choice switch
     3 => GameMode.ComputerVsComputer
 };
 
-List<Party> monsterParties = new List<Party> {monstersOne, monstersTwo, UncodedOne};
+List<Party> monsterParties = new List<Party> {monstersZero, monstersOne, monstersTwo, UncodedOne};
 
 
 
