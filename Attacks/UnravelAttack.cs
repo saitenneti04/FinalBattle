@@ -2,11 +2,11 @@
 {
     private static readonly Random Random = new();
     public UnravelAttack()
-        : base("UNRAVEL") { }
+        : base("UNRAVEL", DamageType.Decoding) { }
 
     public override int GetDamage()
     {
-        return Random.Next(3);
+        return Random.Next(5);
     }
 
     public override float GetDamageProbability()

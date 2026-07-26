@@ -5,7 +5,7 @@ using System.Text;
 public class SlashAttack : Attack
 {
     public SlashAttack()
-        : base("SLASH ATTACK") { }
+        : base("SLASH ATTACK", DamageType.Normal) { }
 
     public override int GetDamage()
     {
