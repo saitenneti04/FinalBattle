@@ -2,7 +2,7 @@
 {
     private static readonly Random Random = new();
     public BoneCrunch()
-        : base("BONE CRUNCH") { }
+        : base("BONE CRUNCH", DamageType.Decoding) { }
 
     public override int GetDamage()
     {

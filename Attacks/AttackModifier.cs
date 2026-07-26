@@ -9,20 +9,26 @@ public abstract class AttackModifier
     public AttackModifier(string name, int value)
     { this.Name = name; DamageReduction = value; }
 
-    public abstract int GetModifiedDamage(int damage);
-    public abstract void PrintDamageMessage();
+    public int GetModifiedDamage(int damage)
+    {
+        if (damage - DamageReduction < 0) { return 0; }
+        return damage - DamageReduction;
+    }
+    public void PrintDamageMessage(int difference)
+    {
+        { Console.WriteLine($"{this.Name} reduced attack by {difference} "); }
+    }
 }
 
 public class StoneArmour : AttackModifier
 { 
     public StoneArmour()
         : base("STONE ARMOR", 1) { }
+}
 
-    public override int GetModifiedDamage(int damage)
-    {
-        return damage - this.DamageReduction;
-    }
+public class ObjectSight : AttackModifier
+{
+    public ObjectSight()
+        : base("OBJECT SIGHT", 2) { }
 
-    public override void PrintDamageMessage()
-    { Console.WriteLine($"{this.Name} reduced attack by {this.DamageReduction} "); }
 }

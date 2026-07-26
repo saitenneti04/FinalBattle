@@ -5,7 +5,7 @@ using System.Text;
 public class StabAttack : Attack
 {
     public StabAttack()
-    : base("STAB ATTACK") { }
+    : base("STAB ATTACK", DamageType.Normal) { }
 
     public override int GetDamage()
     {

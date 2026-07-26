@@ -38,23 +38,35 @@ public class AttackAction : GameAction
     {
         Console.WriteLine($"{_attacker.Name} used {_attack.Name} on {_target.Name}."); 
         int damage = _attack.GetDamage();
+        int newDamage = 0;
         bool damageModified = false;
         if (_target.AttackModifier != null)
         {
-            damage = _target.AttackModifier.GetModifiedDamage(damage);
-            damageModified = true;
-            
+            newDamage = _target.AttackModifier.GetModifiedDamage(damage);
+            damageModified = true;    
         }
         float damageChance = _attack.GetDamageProbability();
         if (damageChance == 1) 
         {
-            if (damageModified) { _target.AttackModifier.PrintDamageMessage(); }
-            DoRun(damage);
+            if (damageModified) 
+            { 
+                _target.AttackModifier.PrintDamageMessage(damage - newDamage);
+                DoRun(newDamage);
+            }
+            else DoRun(damage);
         }
         else if (damageChance == 0.5) 
         {
             int num = random.Next(2);
-            if (num == 1) { DoRun(damage); }
+            if (num == 1)
+            {
+                if (damageModified) 
+                { 
+                    _target.AttackModifier.PrintDamageMessage(damage - newDamage);
+                    DoRun(newDamage);
+                }
+                else DoRun(damage); 
+            }
             else { Console.WriteLine($"{_attacker.Name} MISSED!"); }
         }
         else

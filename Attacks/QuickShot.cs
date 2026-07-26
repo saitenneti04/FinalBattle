@@ -5,7 +5,7 @@ using System.Text;
 public class QuickShot : Attack
 {
     public QuickShot()
-        : base("QUICK SHOT") { }
+        : base("QUICK SHOT", DamageType.Normal) { }
 
     public override int GetDamage()
     {

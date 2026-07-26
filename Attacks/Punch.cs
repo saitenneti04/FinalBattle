@@ -1,7 +1,7 @@
 ﻿public class Punch : Attack
 {
     public Punch()
-        : base("PUNCH") { }
+        : base("PUNCH", DamageType.Decoding) { }
 
     public override int GetDamage()
     {

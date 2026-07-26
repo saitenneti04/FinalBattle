@@ -5,7 +5,7 @@ using System.Text;
 public class Bite : Attack
 {
     public Bite()
-        : base("BITE") { }
+        : base("BITE", DamageType.Normal) { }
 
     public override int GetDamage()
     {

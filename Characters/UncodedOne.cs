@@ -12,7 +12,7 @@ public class UncodedOne : Character
 public class TrueProgrammer : Character
 {
     public TrueProgrammer(string name)
-        : base(name, new Punch(), 25, new Sword(), null)
+        : base(name, new Punch(), 25, new Sword(), new ObjectSight())
     {
     }
 }
